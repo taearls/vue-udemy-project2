@@ -1,26 +1,29 @@
 <template>
   <div class="row">
-    <div class="panel panel-default">
-      <div class="panel-body quote">
-        <slot></slot>
-      </div>
-    </div>
+    <app-quote v-for="(quote, index) in quotes" @click.native="deleteQuote(index)">{{ quote }}</app-quote>
   </div>
 </template>
 
 <script>
+  import Quote from './Quote.vue';
+
+  export default {
+    props: ['quotes'],
+    components: {
+      appQuote: Quote
+    },
+    data: () => {
+      return {
+        quote: ''
+      }
+    },
+    methods: {
+      deleteQuote(index) {
+        this.$emit('quoteDeleted', index);
+      }
+    }
+  }
 </script>
 
 <style>
-  .panel-body { 
-    font-family: 'Arizonia', cursive;
-    font-size: 24px;
-    color: #6e6e6e;
-  }
-  .quote {
-    cursor: pointer;
-  }
-  .quote:hover {
-    background-color: #ffe2e2;
-  }
 </style>

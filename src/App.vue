@@ -1,33 +1,37 @@
 <template>
   <div class="container">
-    <app-header></app-header>
-    <create-quote></create-quote>
-    <quote-grid></quote-grid>
-    <app-footer></app-footer>
+    <new-quote @quoteAdded="newQuote"></new-quote>
+    <quote-grid @quoteDeleted="deleteQuote" :quotes="quotes"></quote-grid>
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <div class="alert alert-info">Info: Click on a Quote to delete it!</div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-  import Footer from './components/shared/Footer.vue';
-  import Header from './components/shared/Header.vue';
-
-  import CreateQuote from './components/Quotes/CreateQuote.vue';
+  import NewQuote from './components/Quotes/NewQuote.vue';
   import QuoteGrid from './components/Quotes/QuoteGrid.vue';
-  import Quote from './components/Quotes/Quote.vue';
 
   export default {
     data: () => {
       return {
-        quotes: [],
+        quotes: ['test quote'],
         maxQuotes: 10
       }
     },
+    methods: {
+      newQuote(quote) {
+        this.quotes.push(quote);
+      },
+      deleteQuote(index) {
+        this.quotes.splice(index, 1);
+      }
+    },
     components: {
-      appFooter: Footer,
-      appHeader: Header,
       quoteGrid: QuoteGrid,
-      createQuote: CreateQuote,
-      quote: Quote
+      newQuote: NewQuote,
     },
   }
 </script>
